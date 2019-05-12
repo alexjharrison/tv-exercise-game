@@ -38,6 +38,11 @@ export default {
       this.show = show
       const click = new Audio('/pop.mp3')
       click.play()
+      setTimeout(() => {
+        this.event = ''
+        this.challenge = ''
+        this.show = ''
+      }, 60000)
     })
   }
 }
