@@ -21,6 +21,12 @@ module.exports = {
     host: '0.0.0.0'
   },
 
+  // Create api endpoint
+  serverMiddleware: [
+    { path: '/api/show', handler: '~/api/Controllers/showController.js' },
+    { path: '/api/workout', handler: '~/api/Controllers/workoutController.js' }
+  ],
+
   /*
    ** Customize the progress-bar color
    */
