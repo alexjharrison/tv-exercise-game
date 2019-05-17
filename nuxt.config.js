@@ -23,8 +23,8 @@ module.exports = {
 
   // Create api endpoint
   serverMiddleware: [
-    { path: '/api/show', handler: '~/api/Controllers/showController.js' },
-    { path: '/api/workout', handler: '~/api/Controllers/workoutController.js' }
+    // { path: '/api/show', handler: '~/api/Controllers/showController.js' },
+    // { path: '/api/workout', handler: '~/api/Controllers/workoutController.js' }
   ],
 
   /*
@@ -66,6 +66,9 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    // baseURL: 'localhost:3003/',
+    // proxyHeaders: false,
+    // credentials: false
   },
 
   /*

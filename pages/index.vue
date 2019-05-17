@@ -28,7 +28,7 @@ export default {
   },
   asyncData({ store }) {
     return {
-      shows: Object.keys(store.state.events)
+      // shows: Object.keys(store.state.events)
     }
   },
   mounted() {

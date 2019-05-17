@@ -1,8 +1,21 @@
 <template>
   <div>
-    <nuxt/>
+    <!-- <nuxt/> -->
   </div>
 </template>
+
+<script>
+export default {
+  fetch({ store }) {
+    // console.log('hi')
+    return store.dispatch('fillStore')
+  },
+  mounted() {
+    // console.log('hi')
+    // this.$store.dispatch('fillStore')
+  }
+}
+</script>
 
 
 <style>

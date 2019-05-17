@@ -3,13 +3,46 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const SocketIO = require('socket.io')
 const http = require('http')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const app = express()
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 async function start() {
+  // Add api routes
+  // app.use('/api', require('./api'))
+  const challengeController = require('./Controllers/challengeController')
+  const eventsController = require('./Controllers/eventsController')
+  app
+    .route('/challenge')
+    .get(challengeController.findAll)
+    .post(challengeController.create)
+  app
+    .route('/challenge/:id')
+    .get(challengeController.findById)
+    .put(challengeController.update)
+    .delete(challengeController.remove)
+  app
+    .route('/event')
+    .get(eventsController.findAll)
+    .post(eventsController.create)
+  app
+    .route('/event/:id')
+    .get(eventsController.findById)
+    .put(eventsController.update)
+    .delete(eventsController.remove)
+  app.get('/seed', require('./seed'))
+
+  // Connect to mongodb
+  const url = 'mongodb://localhost/TvWorkoutDB'
+  await mongoose.connect(url, { useNewUrlParser: true })
+
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 
@@ -39,7 +72,6 @@ start()
 // Add socket.io events
 const server = http.createServer(app)
 const io = SocketIO(server)
-console.log(this)
 io.on('connection', function(socket) {
   // console.log('user connected');
   socket.on('clicked', ({ eventName, difficulty, show, challenges }) => {
