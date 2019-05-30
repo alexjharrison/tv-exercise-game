@@ -5,28 +5,28 @@
       <h4>{{category}}</h4>
       <div>
         <b-button
-          @click="newChallenge(quickEvent,'quick')"
+          @click="newChallenge(quickEvent,'frequent')"
           class="m-1"
           variant="success"
-          v-for="quickEvent in events.quick[category]"
+          v-for="quickEvent in getEventsByFrequency(category,'frequent')"
           :key="quickEvent"
         >{{quickEvent}}</b-button>
       </div>
       <div>
         <b-button
-          @click="newChallenge(mediumEvent,'medium')"
+          @click="newChallenge(mediumEvent,'normal')"
           class="m-1"
           variant="warning"
-          v-for="mediumEvent in events.medium[category]"
+          v-for="mediumEvent in getEventsByFrequency(category,'normal')"
           :key="mediumEvent"
         >{{mediumEvent}}</b-button>
       </div>
       <div>
         <b-button
-          @click="newChallenge(longEvent,'long')"
+          @click="newChallenge(longEvent,'rare')"
           class="m-1"
           variant="danger"
-          v-for="longEvent in events.long[category]"
+          v-for="longEvent in getEventsByFrequency(category,'rare')"
           :key="longEvent"
         >{{longEvent}}</b-button>
       </div>
@@ -43,16 +43,29 @@ export default {
     }
   },
   asyncData({ store, params }) {
+    const game = store.state.selectedGame
     const show = params.show
-    const events = store.state.events[show]
-    const categories = Object.keys(events.quick)
-    return { show, events, categories }
+    const categories = store.getters.categoriesByShow(show)
+    const events = store.getters.eventInfoByShow(show)
+    return { show, categories, events, game }
   },
   methods: {
-    newChallenge(eventName, difficulty) {
-      const { show } = this
+    newChallenge(eventName, frequency) {
+      const { show, game } = this
       const challenges = this.$store.state.challenges
-      this.socket.emit('clicked', { eventName, difficulty, show, challenges })
+      this.socket.emit('clicked', {
+        eventName,
+        frequency,
+        show,
+        game
+      })
+    },
+    getEventsByFrequency(category, frequency) {
+      return this.events
+        .filter(
+          event => event.category === category && event.frequency === frequency
+        )
+        .map(event => event.description)
     }
   }
 }

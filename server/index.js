@@ -15,10 +15,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 async function start() {
-  // Add api routes
-  // app.use('/api', require('./api'))
   const challengeController = require('./Controllers/challengeController')
   const eventsController = require('./Controllers/eventsController')
+  // Add api routes
+  // app.use('/api', require('./api'))
   app
     .route('/challenge')
     .get(challengeController.findAll)
@@ -74,11 +74,14 @@ const server = http.createServer(app)
 const io = SocketIO(server)
 io.on('connection', function(socket) {
   // console.log('user connected');
-  socket.on('clicked', ({ eventName, difficulty, show, challenges }) => {
-    console.log(challenges)
-    const chall = challenges[difficulty]
-    const randInt = Math.floor(Math.random() * chall.length)
-    const randChall = chall[randInt]
+  socket.on('clicked', async ({ eventName, frequency, show, game }) => {
+    const Challenge = require('./Models/Challenge')
+    let allChallenges = await Challenge.find({ frequency, game })
+      .then(dbModel => dbModel)
+      .catch(err => console.log(err))
+
+    const randInt = Math.floor(Math.random() * allChallenges.length)
+    const randChall = allChallenges[randInt].description
     io.emit('update', { eventName, randChall, show })
   })
 })

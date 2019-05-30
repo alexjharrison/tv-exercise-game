@@ -1,22 +1,36 @@
 <template>
   <div>
-    <!-- <nuxt/> -->
+    <div v-if="$route.params.show">
+      <span>Game</span>
+      <b-button
+        class="m-2"
+        @click="$store.commit('setSelectedGame',game)"
+        :key="game"
+        v-for="game in $store.getters.listGames"
+        :variant="bVariant(game)"
+      >{{game}}</b-button>
+    </div>
+    <nuxt/>
   </div>
 </template>
 
 <script>
 export default {
-  fetch({ store }) {
-    // console.log('hi')
-    return store.dispatch('fillStore')
-  },
-  mounted() {
-    // console.log('hi')
-    // this.$store.dispatch('fillStore')
+  methods: {
+    bVariant(game) {
+      return this.$store.state.selectedGame === game
+        ? 'primary'
+        : 'outline-light'
+    }
   }
 }
 </script>
 
+<style scoped>
+button {
+  text-transform: capitalize;
+}
+</style>
 
 <style>
 body {

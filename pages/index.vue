@@ -1,8 +1,9 @@
 <template>
   <div>
+    <span>Show</span>
     <b-button
       :to="'/'+show"
-      variant="primary"
+      :variant="buttonVariant(show)"
       class="m-2"
       v-for="show in shows"
       :key="show"
@@ -26,9 +27,14 @@ export default {
       challenge: ''
     }
   },
-  asyncData({ store }) {
-    return {
-      // shows: Object.keys(store.state.events)
+  computed: {
+    shows() {
+      return this.$store.getters.showList
+    }
+  },
+  methods: {
+    buttonVariant(show) {
+      return show === this.show ? 'primary' : 'outline-light'
     }
   },
   mounted() {
