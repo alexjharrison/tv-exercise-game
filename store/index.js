@@ -13,8 +13,24 @@ export const getters = {
     const gamesWithDupes = state.challenges.map(({ game }) => game)
     return Array.from(new Set(gamesWithDupes))
   },
+  listFrequencies(state) {
+    const freqWithDupes = state.challenges.map(({ frequency }) => frequency)
+    const freqWithDupes2 = state.events.map(({ frequency }) => frequency)
+    const frequencies = freqWithDupes.concat(freqWithDupes2)
+    return Array.from(new Set(frequencies))
+  },
+  eventInfo: state => (show, category) => {
+    return state.events.filter(
+      event => event.show === show && event.category === category
+    )
+  },
   eventInfoByShow: state => show => {
     return state.events.filter(event => event.show === show)
+  },
+  challengesByFrequency: state => (gam, freq) => {
+    return state.challenges.filter(
+      ({ game, frequency }) => freq === frequency && game === gam
+    )
   },
   categoriesByShow: state => show => {
     const catsWithDupes = state.events
@@ -45,7 +61,7 @@ export const actions = {
     commit('setSelectedGame', getters.listGames[0])
     return 2
   },
-  nuxtServerInit({ dispatch, commit }, { req }) {
-    return dispatch('fillStore')
+  async nuxtServerInit({ dispatch, commit }, { req }) {
+    return await dispatch('fillStore')
   }
 }
