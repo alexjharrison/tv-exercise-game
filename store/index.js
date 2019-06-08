@@ -54,8 +54,8 @@ export const mutations = {
 
 export const actions = {
   async fillStore({ commit, getters }) {
-    const challenges = await this.$axios.$get('challenge')
-    const events = await this.$axios.$get('event')
+    const challenges = await this.$axios.$get('http://localhost:3003/challenge')
+    const events = await this.$axios.$get('http://localhost:3003/event')
     commit('setEvents', events)
     commit('setChallenges', challenges)
     commit('setSelectedGame', getters.listGames[0])

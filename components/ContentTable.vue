@@ -26,7 +26,7 @@ export default {
   methods: {
     remove(_id) {
       this.$axios
-        .$delete(`${this.type}/${_id}`)
+        .$delete(`http://localhost:3003/${this.type}/${_id}`)
         .then(res => this.$store.dispatch('fillStore'))
         .catch(e => console.log({ e }))
     }

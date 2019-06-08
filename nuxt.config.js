@@ -66,8 +66,8 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://localhost:3003/api/',
-    browserBaseURL: 'https://tv.aharrison.xyz/'
+    // baseURL: 'http://localhost:3003/api/',
+    // browserBaseURL: 'http://localhost:3003/api/'
   },
 
   /*

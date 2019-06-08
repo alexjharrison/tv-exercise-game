@@ -2,7 +2,6 @@ import http from 'http'
 import socketIO from 'socket.io'
 
 export default function() {
-  console.log('server')
   const server = http.createServer(this.nuxt.renderer.app)
   const io = socketIO(server)
 

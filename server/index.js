@@ -75,7 +75,6 @@ const io = SocketIO(server)
 io.on('connection', function(socket) {
   // console.log('user connected');
   socket.on('clicked', async ({ eventName, frequency, show, game }) => {
-    console.log(game)
     const Challenge = require('./Models/Challenge')
     let allChallenges = await Challenge.find({ frequency, game })
       .then(dbModel => dbModel)
