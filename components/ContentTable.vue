@@ -1,8 +1,7 @@
 <template>
-  <div id="content-table" v-if="tableData">
+  <div id="content-table" class="mx-4" v-if="tableData">
     <h4 class="my-3">{{title}}</h4>
     <b-table :sort-by="fields[1]" dark :items="items">
-      <!-- <span slot="remove" slot-scope="frank" v-html="frank.value"></span> -->
       <template slot="remove" slot-scope="row">
         <b-button variant="danger" size="sm" @click="remove(row.value)">Delete</b-button>
       </template>
@@ -13,7 +12,7 @@
 <script>
 import _ from 'lodash'
 export default {
-  props: ['tableData', 'title', 'fields'],
+  props: ['tableData', 'title', 'fields', 'type'],
   computed: {
     items() {
       return this.tableData.map(item => {
@@ -26,7 +25,10 @@ export default {
   },
   methods: {
     remove(_id) {
-      console.log(_id)
+      this.$axios
+        .$delete(`http://localhost:3003/${this.type}/${_id}`)
+        .then(res => this.$store.dispatch('fillStore'))
+        .catch(e => console.log({ e }))
     }
   }
 }

@@ -75,6 +75,7 @@ const io = SocketIO(server)
 io.on('connection', function(socket) {
   // console.log('user connected');
   socket.on('clicked', async ({ eventName, frequency, show, game }) => {
+    console.log(game)
     const Challenge = require('./Models/Challenge')
     let allChallenges = await Challenge.find({ frequency, game })
       .then(dbModel => dbModel)
@@ -83,5 +84,6 @@ io.on('connection', function(socket) {
     const randInt = Math.floor(Math.random() * allChallenges.length)
     const randChall = allChallenges[randInt].description
     io.emit('update', { eventName, randChall, show })
+    io.emit()
   })
 })

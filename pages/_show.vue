@@ -42,12 +42,16 @@ export default {
       socket: io()
     }
   },
+  computed: {
+    game() {
+      return this.$store.state.selectedGame
+    }
+  },
   asyncData({ store, params }) {
-    const game = store.state.selectedGame
     const show = params.show
     const categories = store.getters.categoriesByShow(show)
     const events = store.getters.eventInfoByShow(show)
-    return { show, categories, events, game }
+    return { show, categories, events }
   },
   methods: {
     newChallenge(eventName, frequency) {
