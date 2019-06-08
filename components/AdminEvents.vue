@@ -94,7 +94,7 @@ export default {
     },
     addEvent() {
       this.$axios
-        .post('http://localhost:3003/event', {
+        .post('event', {
           description: this.newEventName,
           frequency: this.newEventFrequency,
           category: this.newShowCategory,
