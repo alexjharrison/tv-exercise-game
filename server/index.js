@@ -5,6 +5,7 @@ const SocketIO = require('socket.io')
 const http = require('http')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = express()
 
 // Import and Set Nuxt.js options
@@ -13,6 +14,7 @@ config.dev = !(process.env.NODE_ENV === 'production')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 
 async function start() {
   const challengeController = require('./Controllers/challengeController')

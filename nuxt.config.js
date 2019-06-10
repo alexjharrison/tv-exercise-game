@@ -1,4 +1,5 @@
 const pkg = require('./package')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -47,7 +48,8 @@ module.exports = {
   plugins: [],
 
   env: {
-    WS_URL: process.env.WS_URL || 'http://localhost:3000'
+    WS_URL: process.env.WS_URL || 'http://localhost:3000',
+    API_URL: process.env.API_URL
   },
 
   /*
@@ -57,7 +59,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://bootstrap-vue.js.org/docs/
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/dotenv'
     // '~/io'
     // Socket io
   ],
@@ -68,6 +71,9 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: 'http://localhost:3003/api/',
     // browserBaseURL: 'http://localhost:3003/api/'
+    baseURL: process.env.API_URL,
+    proxyHeaders: false,
+    credentials: false
   },
 
   /*

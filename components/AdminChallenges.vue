@@ -76,7 +76,7 @@ export default {
   methods: {
     addChallenge() {
       this.$axios
-        .post('http://localhost:3003/challenge', {
+        .post('challenge', {
           description: this.newChallengeName,
           frequency: this.newChallengeFrequency,
           game: this.game

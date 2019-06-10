@@ -39,7 +39,9 @@ import io from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io()
+      socket: io(),
+      categories: null,
+      events: null
     }
   },
   computed: {
@@ -47,11 +49,8 @@ export default {
       return this.$store.state.selectedGame
     }
   },
-  asyncData({ store, params }) {
-    const show = params.show
-    const categories = store.getters.categoriesByShow(show)
-    const events = store.getters.eventInfoByShow(show)
-    return { show, categories, events }
+  asyncData({ params }) {
+    return { show: params.show }
   },
   methods: {
     newChallenge(eventName, frequency) {
@@ -71,6 +70,10 @@ export default {
         )
         .map(event => event.description)
     }
+  },
+  mounted() {
+    this.categories = this.$store.getters.categoriesByShow(this.show)
+    this.events = this.$store.getters.eventInfoByShow(this.show)
   }
 }
 </script>

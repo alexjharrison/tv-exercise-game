@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.state.events && $store.state.challenges">
     <div v-if="$route.params.show">
       <span>Game</span>
       <b-button
@@ -22,6 +22,9 @@ export default {
         ? 'primary'
         : 'outline-light'
     }
+  },
+  mounted() {
+    this.$store.dispatch('fillStore')
   }
 }
 </script>
